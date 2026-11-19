@@ -1,1 +1,164 @@
+#include <iostream>
+using namespace std;
+
+int largestDigit(int n)
+{
+    if (n < 10)
+        return n;
+
+    int last = n % 10;
+    int rest = largestDigit(n / 10);
+    return (last > rest) ? last : rest;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    cout << largestDigit(n) << endl;
+    return 0;
+}
+
+
+#include <iostream>
+using namespace std;
+
+int gcd(int a, int b)
+{
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+int commonFactors(int a, int b)
+{
+    int g = gcd(a, b);
+    int count = 0;
+    for (int d = 1; d <= g; d++)
+    {
+        if (g % d == 0)
+            count++;
+    }
+    return count;
+}
+
+int main()
+{
+    int a, b;
+    cin >> a >> b;
+    cout << commonFactors(a, b) << endl;
+    return 0;
+}
+
+
+#include <iostream>
+using namespace std;
+
+int sumBase(int n, int k)
+{
+    if (n == 0)
+        return 0;
+    return n % k + sumBase(n / k, k);
+}
+
+int main()
+{
+    int n, k;
+    cin >> n >> k;
+    cout << sumBase(n, k) << endl;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+
+int countDiv(int n, int d)
+{
+    if (d == 0)
+        return 0;
+    if (n % d == 0)
+        return 1 + countDiv(n, d - 1);
+    return countDiv(n, d - 1);
+}
+
+bool isThree(int n)
+{
+    return countDiv(n, n) == 3;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    cout << boolalpha << isThree(n) << endl;
+    return 0;
+}
+
+
+#include <iostream>
+using namespace std;
+
+bool play(int n, int take, bool aliceTurn)
+{
+    if (n < take)
+        return !aliceTurn;
+    return play(n - take, take - 1, !aliceTurn);
+}
+
+bool canAliceWin(int n)
+{
+    return play(n, 10, true);
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    cout << boolalpha << canAliceWin(n) << endl;
+    return 0;
+}
+
+
+#include <iostream>
+using namespace std;
+
+const long long MOD = 1000000007;
+
+bool isPrime(int x)
+{
+    if (x < 2)
+        return false;
+    for (int d = 2; d * d <= x; d++)
+    {
+        if (x % d == 0)
+            return false;
+    }
+    return true;
+}
+
+long long factorial(int n)
+{
+    if (n <= 1)
+        return 1;
+    return n * factorial(n - 1) % MOD;
+}
+
+int numPrimeArrangements(int n)
+{
+    int p = 0;
+    for (int x = 2; x <= n; x++)
+    {
+        if (isPrime(x))
+            p++;
+    }
+    return factorial(p) * factorial(n - p) % MOD;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    cout << numPrimeArrangements(n) << endl;
+    return 0;
+}
 
